@@ -1,4 +1,4 @@
-const API = "http://192.168.10.252:8080/api/solicitudes";
+const API = "https://chat-production-a607.up.railway.app/api/solicitudes";
 
 function enviar() {
     fetch(API, {
