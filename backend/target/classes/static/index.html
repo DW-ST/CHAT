@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mesa de Soporte</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Mesa de Soporte - Registro y Seguimiento</h2>
+
+<div class="contenedor">
+
+    <!-- FORMULARIO -->
+    <div class="formulario">
+        <h3>Registrar Novedad</h3>
+
+        <input id="usuario" placeholder="Nombre">
+        <textarea id="mensaje" placeholder="Describe la novedad"></textarea>
+
+        <select id="prioridad">
+            <option value="1">Alta</option>
+            <option value="2">Media</option>
+            <option value="3">Baja</option>
+        </select>
+
+        <button onclick="enviar()">Enviar</button>
+    </div>
+
+    <!-- REPORTE -->
+    <div class="reporte">
+        <h3>Reporte en Tiempo Real</h3>
+        <div id="lista"></div>
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

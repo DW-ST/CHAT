@@ -1,0 +1,43 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.contenedor {
+    display: flex;
+    gap: 40px;
+}
+
+.formulario, .reporte {
+    width: 45%;
+}
+
+input, textarea, select {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+}
+
+button {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.card {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    color: white;
+}
+
+.verde {
+    background-color: #2ecc71;
+}
+
+.naranja {
+    background-color: #f39c12;
+}
+
+.rojo {
+    background-color: #e74c3c;
+}
