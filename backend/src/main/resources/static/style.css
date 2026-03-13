@@ -29,7 +29,8 @@ button {
     border-radius: 6px;
 }
 
-/* tarjetas de indicadores */
+/* COLORES PARA EL FRONTEND */
+
 .verde {
     background-color: #2ecc71;
     color: white;
@@ -45,8 +46,9 @@ button {
     color: white;
 }
 
-/* tarjetas de solicitudes */
-#lista .card {
+/* TARJETAS SOLO DEL SOPORTE */
+
+#listaSoporte .card {
     background-color: #f4f4f4;
     color: #333;
     border: 1px solid #ddd;
