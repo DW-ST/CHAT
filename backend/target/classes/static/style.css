@@ -27,17 +27,40 @@ button {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 6px;
-    color: white;
 }
 
+/* tarjetas de indicadores */
 .verde {
     background-color: #2ecc71;
+    color: white;
 }
 
 .naranja {
     background-color: #f39c12;
+    color: white;
 }
 
 .rojo {
     background-color: #e74c3c;
+    color: white;
+}
+
+/* tarjetas de solicitudes */
+#lista .card {
+    background-color: #f4f4f4;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+#lista button {
+    margin-top: 8px;
+    padding: 6px 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+#lista button:hover {
+    background-color: #2980b9;
 }
