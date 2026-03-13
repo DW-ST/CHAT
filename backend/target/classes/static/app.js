@@ -96,5 +96,7 @@ function atender(id) {
     });
 }
 
+
 setInterval(cargar, 5000);
 cargar();
+

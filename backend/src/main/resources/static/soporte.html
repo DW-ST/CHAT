@@ -1,21 +1,157 @@
-<!DOCTYPE html>
+<!<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Panel Soporte</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Panel Soporte</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <h2>Panel de Soporte</h2>
 
+<!-- FILTRO FECHAS -->
+
+<div class="filtros">
+
+Desde:
+<input type="date" id="inicio">
+
+Hasta:
+<input type="date" id="fin">
+
+<button onclick="filtrar()">Filtrar</button>
+
+</div>
+
+
+<!-- INDICADORES -->
+
+<div class="indicadores">
+
+<div class="card verde">
+<h3 id="oportunas">0</h3>
+<p>Oportunas</p>
+</div>
+
+<div class="card naranja">
+<h3 id="alerta">0</h3>
+<p>Alerta</p>
+</div>
+
+<div class="card rojo">
+<h3 id="inoportunas">0</h3>
+<p>Inoportunas</p>
+</div>
+
+<div class="card azul">
+<h3 id="promedio">0</h3>
+<p>Promedio horas</p>
+</div>
+
+</div>
+
+
+<h3>Solicitudes</h3>
+
 <div id="lista"></div>
 
-<script>
-    const ES_SOPORTE = true;
-</script>
 
-<script src="app.js"></script>
+<script>
+
+const API = "/api/solicitudes";
+
+
+function cargarIndicadores(){
+
+let inicio = document.getElementById("inicio").value;
+let fin = document.getElementById("fin").value;
+
+let url = API + "/indicadores";
+
+if(inicio && fin){
+
+url += "?inicio="+inicio+"&fin="+fin;
+
+}
+
+fetch(url)
+.then(res=>res.json())
+.then(data=>{
+
+document.getElementById("oportunas").innerText = data.oportunas;
+document.getElementById("alerta").innerText = data.alerta;
+document.getElementById("inoportunas").innerText = data.inoportunas;
+document.getElementById("promedio").innerText = data.promedio.toFixed(2);
+
+});
+
+}
+
+
+
+function cargar(){
+
+fetch(API + "/fifo")
+.then(res=>res.json())
+.then(data=>{
+
+let html="";
+
+data.forEach(s=>{
+
+html += `
+<div class="card">
+
+<b>${s.usuario}</b><br>
+${s.mensaje}<br>
+
+<button onclick="atender(${s.id})">
+Marcar Atendida
+</button>
+
+</div>
+`;
+
+});
+
+document.getElementById("lista").innerHTML = html;
+
+});
+
+}
+
+
+function atender(id){
+
+fetch(API + "/atender/" + id,{
+method:"PUT"
+})
+.then(()=>cargar());
+
+}
+
+
+
+function filtrar(){
+
+cargarIndicadores();
+
+}
+
+
+setInterval(()=>{
+
+cargar();
+cargarIndicadores();
+
+},5000);
+
+
+cargar();
+cargarIndicadores();
+
+</script>
 
 </body>
 </html>
