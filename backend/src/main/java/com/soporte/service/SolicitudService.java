@@ -1,5 +1,9 @@
 package com.soporte.service;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -47,4 +51,64 @@ public Solicitud atender(Long id) {
     s.setFechaRespuesta(LocalDateTime.now());
     return repository.save(s);
 }
+
+public Map<String,Object> calcularIndicadores(String inicio, String fin){
+
+List<Solicitud> lista;
+
+if(inicio != null && fin != null){
+
+LocalDateTime i = LocalDate.parse(inicio).atStartOfDay();
+LocalDateTime f = LocalDate.parse(fin).atTime(23,59);
+
+lista = repository.findByFechaCreacionBetween(i,f);
+
+}else{
+
+lista = repository.findAll();
+
+}
+
+long oportunas = 0;
+long alerta = 0;
+long inoportunas = 0;
+
+double totalHoras = 0;
+long respondidas = 0;
+
+for(Solicitud s : lista){
+
+double horas = s.getHorasTranscurridas();
+
+if(horas <= 1) oportunas++;
+else if(horas < 3) alerta++;
+else inoportunas++;
+
+if(s.getFechaRespuesta() != null){
+
+double respuesta = Duration
+.between(s.getFechaCreacion(), s.getFechaRespuesta())
+.toMinutes()/60.0;
+
+totalHoras += respuesta;
+respondidas++;
+
+}
+
+}
+
+double promedio = respondidas > 0 ? totalHoras/respondidas : 0;
+
+Map<String,Object> r = new HashMap<>();
+
+r.put("oportunas", oportunas);
+r.put("alerta", alerta);
+r.put("inoportunas", inoportunas);
+r.put("promedio", promedio);
+
+return r;
+
+}
+
+
 }

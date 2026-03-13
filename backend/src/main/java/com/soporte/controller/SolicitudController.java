@@ -2,6 +2,7 @@ package com.soporte.controller;
 
 import java.util.List;
 
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soporte.model.Solicitud;
@@ -32,7 +34,17 @@ public class SolicitudController {
     public List<Solicitud> listar() {
         return service.listarTodas();
     }
+    
+    @GetMapping("/indicadores")
+    public Map<String, Object> indicadores(
+    @RequestParam(required = false) String inicio,
+    @RequestParam(required = false) String fin
+    ) {
 
+    return service.calcularIndicadores(inicio, fin);
+
+    }
+    
     @GetMapping("/fifo")
     public List<Solicitud> fifo() {
         return service.listarFIFO();
