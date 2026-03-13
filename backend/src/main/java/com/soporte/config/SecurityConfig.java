@@ -11,29 +11,41 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
+@Bean
+public InMemoryUserDetailsManager userDetailsService() {
 
-        UserDetails soporte = User
-                .withUsername("soporte")
-                .password("{noop}1234")
-                .roles("SOPORTE")
-                .build();
+UserDetails soporte = User
+.withUsername("soporte")
+.password("{noop}1234")
+.roles("SOPORTE")
+.build();
 
-        return new InMemoryUserDetailsManager(soporte);
-    }
+return new InMemoryUserDetailsManager(soporte);
+}
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+@Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/solicitudes/atender/**").hasRole("SOPORTE")
-                .anyRequest().permitAll()
-            )
-            .httpBasic();
+http
+.csrf(csrf -> csrf.disable())
 
-        return http.build();
-    }
+.authorizeHttpRequests(auth -> auth
+
+.requestMatchers("/soporte.html").hasRole("SOPORTE")
+.requestMatchers("/api/solicitudes/atender/**").hasRole("SOPORTE")
+
+.anyRequest().permitAll()
+
+)
+
+.formLogin(login -> login
+.defaultSuccessUrl("/soporte.html", true)
+)
+
+.logout(logout -> logout
+.logoutSuccessUrl("/")
+);
+
+return http.build();
+}
 }
